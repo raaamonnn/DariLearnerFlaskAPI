@@ -13,7 +13,7 @@ words = [
      'DariWord': 'Yak'},
     {'id': 2,
      'EnglishWord': 'Naan',
-     'DariWord': 'Bread'}
+     'DariWord': "Bread"}
 ]
 
 
@@ -33,24 +33,25 @@ def api_id():
     results = []
 
     if 'id' in request.args:
-        id = int(request.args['id'])
-        print("if")
+        requestid = request.args.get('id')
         for word in words:
-            if word['id'] == id:
+            if word['id'] == requestid:
                 results.append(word)
 
 
     #not working for some reason
     elif 'word' in request.args:
-        word = int(request.args['word'])
-        print("elif")
-        print(word)
+        requestWord = request.args.get('word')
+        requestWord = str(requestWord)
+        requestWord = requestWord.capitalize()
+        print(requestWord)
         for word in words:
-            if word['EnglishWord'] == word or word['DariWord'] == word:
+            print(word['DariWord'] == requestWord)
+            if word['EnglishWord'] == requestWord or word['DariWord'] == requestWord:
                 results.append(word)
 
     else:
-        return "Error: No id field provided. Please specify an id or word."
+        return "Error: No valid field provided. Please specify an id or word."
 
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
